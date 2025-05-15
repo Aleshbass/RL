@@ -1,6 +1,6 @@
 "use server";
 
-import stripe from "@/lib/stripe";
+import { initializePaystackTransaction } from "@/lib/paystack";
 import baseUrl from "@/lib/baseUrl";
 
 import { urlFor } from "@/sanity/lib/image";
@@ -9,7 +9,7 @@ import { createStudentIfNotExists } from "@/sanity/lib/student/createStudentIfNo
 import { clerkClient } from "@clerk/nextjs/server";
 import { createEnrollment } from "@/sanity/lib/student/createEnrollment";
 
-export async function createStripeCheckout(courseId: string, userId: string) {
+export async function createPaystackCheckout(courseId: string, userId: string) {
   try {
     // 1. Query course details from Sanity
     const course = await getCourseById(courseId);
@@ -38,14 +38,14 @@ export async function createStripeCheckout(courseId: string, userId: string) {
       throw new Error("User not found");
     }
 
-    // 2. Validate course data and prepare price for Stripe
+    // 2. Validate course data and prepare price for Paystack
     if (!course.price && course.price !== 0) {
       throw new Error("Course price is not set");
     }
-    const priceInCents = Math.round(course.price * 100);
+    const priceInKobo = Math.round(course.price * 100); // 1 NGN = 100 Kobo
 
-    // if course is free, create enrollment and redirect to course page (BYPASS STRIPE CHECKOUT)
-    if (priceInCents === 0) {
+    // if course is free, create enrollment and redirect to course page (BYPASS PAYSTACK CHECKOUT)
+    if (priceInKobo === 0) {
       await createEnrollment({
         studentId: user._id,
         courseId: course._id,
@@ -62,35 +62,29 @@ export async function createStripeCheckout(courseId: string, userId: string) {
       throw new Error("Course data is incomplete");
     }
 
-    // 3. Create and configure Stripe Checkout Session with course details
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: title,
-              description: description,
-              images: [urlFor(image).url() || ""],
-            },
-            unit_amount: priceInCents,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${baseUrl}/courses/${slug.current}`,
-      cancel_url: `${baseUrl}/courses/${slug.current}?canceled=true`,
-      metadata: {
-        courseId: course._id,
-        userId: userId,
-      },
+    // 3. Create and configure Paystack Transaction
+    const callback_url = `https://rehabifylearn.com/courses/${slug.current}`;
+    const metadata = {
+      courseId: course._id,
+      userId: userId,
+      courseTitle: title,
+    };
+
+    const paystackRes = await initializePaystackTransaction({
+      email,
+      amount: priceInKobo,
+      callback_url,
+      metadata,
     });
 
-    // 4. Return checkout session URL for client redirect
-    return { url: session.url };
+    if (!paystackRes.status || !paystackRes.data?.authorization_url) {
+      throw new Error("Failed to initialize Paystack transaction");
+    }
+
+    // 4. Return Paystack authorization URL for client redirect
+    return { url: paystackRes.data.authorization_url };
   } catch (error) {
-    console.error("Error in createStripeCheckout:", error);
-    throw new Error("Failed to create checkout session");
+    console.error("Error in createPaystackCheckout:", error);
+    throw new Error("Failed to create Paystack checkout session");
   }
 }

@@ -13,9 +13,9 @@ export const courseType = defineType({
     }),
     {
       name: "price",
-      title: "Price (USD)",
+      title: "Price (₦)",
       type: "number",
-      description: "Price in USD",
+      description: "Price in Naira (₦)",
       validation: (Rule) => Rule.min(0),
     },
     defineField({
@@ -56,6 +56,35 @@ export const courseType = defineType({
       title: "Instructor",
       type: "reference",
       to: { type: "instructor" },
+    }),
+    defineField({
+      name: "comments",
+      title: "Comments",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "user", title: "User", type: "reference", to: [{ type: "student" }] },
+            { name: "text", title: "Text", type: "text" },
+            { name: "createdAt", title: "Created At", type: "datetime", initialValue: () => new Date().toISOString() },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: "likes",
+      title: "Likes",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "user", title: "User", type: "reference", to: [{ type: "student" }] },
+            { name: "createdAt", title: "Created At", type: "datetime", initialValue: () => new Date().toISOString() },
+          ],
+        },
+      ],
     }),
   ],
 });

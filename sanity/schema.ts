@@ -8,6 +8,9 @@ import {
   enrollmentType,
   categoryType,
   lessonCompletionType,
+  postType,
+  authorType,
+  blockContent,
 } from "./schemaTypes";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -20,5 +23,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     enrollmentType,
     categoryType,
     lessonCompletionType,
+    authorType,
+    postType,
+    blockContent,
   ],
 };

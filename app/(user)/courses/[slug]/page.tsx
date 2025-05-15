@@ -6,6 +6,11 @@ import EnrollButton from "@/components/EnrollButton";
 import getCourseBySlug from "@/sanity/lib/courses/getCourseBySlug";
 import { isEnrolledInCourse } from "@/sanity/lib/student/isEnrolledInCourse";
 import { auth } from "@clerk/nextjs/server";
+import { formatNaira } from "@/lib/utils";
+import CommentsSection from "@/components/CommentsSection";
+import LikeButton from "@/components/LikeButton";
+import { CourseCard } from "@/components/CourseCard";
+import { getRelatedCourses } from "@/sanity/lib/courses/getRelatedCourses";
 
 interface CoursePageProps {
   params: Promise<{
@@ -31,6 +36,11 @@ export default async function CoursePage({ params }: CoursePageProps) {
     );
   }
 
+  // Fetch related courses
+  const relatedCourses = course.category?._id
+    ? await getRelatedCourses(course._id, course.category._id)
+    : [];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -45,9 +55,10 @@ export default async function CoursePage({ params }: CoursePageProps) {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black to-black/60" />
+
         <div className="absolute inset-0 container mx-auto px-4 flex flex-col justify-end pb-12">
           <Link
-            href="/"
+            href="/courses"
             prefetch={false}
             className="text-white mb-8 flex items-center hover:text-primary transition-colors w-fit"
           >
@@ -70,7 +81,9 @@ export default async function CoursePage({ params }: CoursePageProps) {
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:min-w-[300px]">
               <div className="text-3xl font-bold text-white mb-4">
-                {course.price === 0 ? "Free" : `$${course.price}`}
+                {!course.price || course.price === 0
+                  ? "Free"
+                  : formatNaira(course.price)}
               </div>
               <EnrollButton courseId={course._id} isEnrolled={isEnrolled} />
             </div>
@@ -120,6 +133,23 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 ))}
               </div>
             </div>
+
+            {/* Comments Section */}
+            <div className="bg-card rounded-lg p-6 border border-border">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold">Course Discussion</h2>
+                <LikeButton
+                  course={course}
+                  isEnrolled={isEnrolled}
+                  clerkId={userId || ""}
+                />
+              </div>
+              <CommentsSection
+                course={course}
+                isEnrolled={isEnrolled}
+                clerkId={userId || ""}
+              />
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -140,9 +170,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                       </div>
                     )}
                     <div>
-                      <div className="font-medium">
-                        {course.instructor.name}
-                      </div>
+                      <div className="font-medium">{course.instructor.name}</div>
                       <div className="text-sm text-muted-foreground">
                         Instructor
                       </div>
@@ -158,6 +186,22 @@ export default async function CoursePage({ params }: CoursePageProps) {
             </div>
           </div>
         </div>
+
+        {/* Recommended Courses */}
+        {relatedCourses.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold mb-8">Recommended Courses</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedCourses.map((relatedCourse) => (
+                <CourseCard
+                  key={relatedCourse._id}
+                  course={relatedCourse}
+                  href={`/courses/${relatedCourse.slug}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

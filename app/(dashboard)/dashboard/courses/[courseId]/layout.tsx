@@ -4,6 +4,7 @@ import getCourseById from "@/sanity/lib/courses/getCourseById";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { getCourseProgress } from "@/sanity/lib/lessons/getCourseProgress";
 import { checkCourseAccess } from "@/lib/auth";
+import { CourseCompletionBadge } from "@/components/CourseCompletionBadge";
 
 interface CourseLayoutProps {
   children: React.ReactNode;
@@ -40,7 +41,16 @@ export default async function CourseLayout({
   return (
     <div className="h-full">
       <Sidebar course={course} completedLessons={progress.completedLessons} />
-      <main className="h-full lg:pt-[64px] pl-20 lg:pl-96">{children}</main>
+      <main className="h-full lg:pt-[64px] pl-20 lg:pl-96">
+        <div className="container max-w-4xl mx-auto p-6">
+          <CourseCompletionBadge
+            clerkId={user.id}
+            courseId={courseId}
+            progress={progress.courseProgress}
+          />
+          {children}
+        </div>
+      </main>
     </div>
   );
 }

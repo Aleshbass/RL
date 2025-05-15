@@ -139,4 +139,20 @@ export const structure = (S: StructureBuilder) =>
             .title("System Management")
             .items([S.documentTypeListItem("category").title("Categories")])
         ),
+
+      S.divider(),
+
+      // Blog Management
+      S.listItem()
+        .title("Blog")
+        .child(
+          S.list()
+            .title("Blog Management")
+            .items([
+              S.documentTypeListItem("post").title("Posts"),
+              S.documentTypeListItem("author").title("Authors"),
+            ])
+        ),
+
+      S.divider(),
     ]);

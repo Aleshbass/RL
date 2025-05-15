@@ -43,7 +43,7 @@ export default async function MyCoursesPage() {
               to get started!
             </p>
             <Link
-              href="/"
+              href="/courses"
               prefetch={false}
               className="inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
             >

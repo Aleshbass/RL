@@ -10,6 +10,7 @@ import {
   GetCoursesQueryResult,
   GetEnrolledCoursesQueryResult,
 } from "@/sanity.types";
+import { formatNaira } from "@/lib/utils";
 
 interface CourseCardProps {
   course:
@@ -26,9 +27,9 @@ export function CourseCard({ course, progress, href }: CourseCardProps) {
     <Link
       href={href}
       prefetch={false}
-      className="group hover:no-underline flex"
+      className="group hover:no-underline flex h-full"
     >
-      <div className="bg-card rounded-xl overflow-hidden shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:translate-y-[-4px] border border-border flex flex-col flex-1">
+      <div className="bg-card rounded-xl overflow-hidden shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl hover:translate-y-[-4px] border border-border flex flex-col flex-1 h-full">
         <div className="relative h-52 w-full overflow-hidden">
           {course.image ? (
             <Image
@@ -51,9 +52,7 @@ export function CourseCard({ course, progress, href }: CourseCardProps) {
               <span className="text-white font-bold px-3 py-1 bg-black/50 dark:bg-white/20 rounded-full backdrop-blur-sm">
                 {course.price === 0
                   ? "Free"
-                  : `$${course.price.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                    })}`}
+                  : formatNaira(course.price)}
               </span>
             )}
           </div>

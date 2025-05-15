@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         hostname: "img.clerk.com",
         protocol: "https",
       },
+      {
+        hostname: "res.cloudinary.com",
+        protocol: "https",
+      },
     ],
   },
 };

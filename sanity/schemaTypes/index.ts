@@ -3,7 +3,6 @@ import { courseType } from "./courseType";
 import { moduleType } from "./moduleType";
 import { lessonType } from "./lessonType";
 import { instructorType } from "./instructorType";
-import { blockContent } from "./blockContent";
 import { studentType } from "./studentType";
 import { enrollmentType } from "./enrollmentType";
 import { categoryType } from "./categoryType";
@@ -15,7 +14,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     moduleType,
     lessonType,
     instructorType,
-    blockContent,
     studentType,
     enrollmentType,
     categoryType,
@@ -31,3 +29,6 @@ export * from "./studentType";
 export * from "./enrollmentType";
 export * from "./categoryType";
 export * from "./lessonCompletionType";
+export { default as blockContent } from "./blockContent";
+export { default as postType } from "./postType";
+export { default as authorType } from "./authorType";

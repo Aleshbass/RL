@@ -21,5 +21,12 @@ export const instructorType = defineType({
       title: "Photo",
       type: "image",
     }),
+    defineField({
+      name: "email",
+      title: "Email",
+      type: "string",
+      description: "Instructor's email address for notifications.",
+      validation: (Rule) => Rule.email(),
+    }),
   ],
 });

@@ -10,6 +10,22 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Rehabify Primary Colors
+        rehabify: {
+          core: "#005b57", // Core Green
+          highlight: "#00cd0f", // Highlighter
+          alt: "#002e2c", // Alternate Green
+        },
+        // Rehabify Secondary Colors
+        secondary: {
+          honeydew: "#F1FFE9", // Honey Dew
+          bone: "#E3DFD2", // Bone
+          cosmic: "#FAF6E7", // Cosmic Latte
+          jasmine: "#FFE682", // Jasmine
+          fairy: "#FFCFDC", // Fairy Tale
+          mint: "#D4FAE8", // Mint Green
+        },
+        // Original theme colors
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -23,10 +39,6 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -78,7 +90,14 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: {
+        sans: ['Pally', 'system-ui', 'sans-serif'],
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    require("tailwind-scrollbar-hide")
+  ],
 } satisfies Config;
