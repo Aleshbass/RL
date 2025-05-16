@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
-import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
@@ -133,7 +133,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Footer />
+          <ConditionalFooter />
         </ThemeProvider>
       </body>
     </html>

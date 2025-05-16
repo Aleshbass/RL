@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useUser, useClerk } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { addCourseComment, removeCourseComment } from "@/actions/courseComments";
 import { db } from "@/lib/firebase";
 import { ref as dbRef, onValue, push, set } from "firebase/database";
@@ -20,7 +20,6 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
   const [comments, setComments] = useState(course?.comments || []);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
-  const { client } = useClerk();
   const [avatars, setAvatars] = useState<Record<string, string>>({});
 
   // Realtime comments from Firebase
@@ -35,25 +34,31 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
     return () => unsubscribe();
   }, [course?._id]);
 
-  // Fetch Clerk avatars for all unique user._ref in comments
+  // Fetch only Clerk avatars for all unique user._ref in comments
   useEffect(() => {
     async function fetchAvatars() {
       const uniqueIds = Array.from(new Set(comments.map((c) => c.user?._ref).filter(Boolean)));
       const avatarMap: Record<string, string> = {};
+      
       for (const id of uniqueIds) {
         if (!id) continue;
+        
+        // Fetch avatars
         try {
-          const res = await fetch(`/api/clerk/avatar/${id}`);
-          const data = await res.json();
-          avatarMap[id] = data.imageUrl || "";
+          const avatarRes = await fetch(`/api/clerk/avatar/${id}`);
+          const avatarData = await avatarRes.json();
+          avatarMap[id] = avatarData.imageUrl || "";
         } catch {
           avatarMap[id] = "";
         }
       }
+      
       setAvatars(avatarMap);
     }
+    
     if (comments.length > 0) fetchAvatars();
-  }, [comments, client]);
+  }, [comments]);
+  // No longer tracking usernames in state
 
   const handleAddComment = async () => {
     if (!commentText.trim() || !clerkId || !user?.id || !course) return;
@@ -129,6 +134,7 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
             <div className="flex items-center gap-3">
               {comment.user?._ref && avatars[comment.user._ref] ? (
                 <Image
+                  key={`avatar-${comment._key}`}
                   src={avatars[comment.user._ref]}
                   alt="avatar"
                   width={32}
@@ -139,12 +145,25 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
                   }}
                 />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-gray-200" />
+                <div key={`avatar-placeholder-${comment._key}`} className="w-8 h-8 rounded-full bg-gray-200" />
               )}
               <div>
-                <div className="font-medium text-sm">{comment.user?._ref?.slice(0, 8) || "User"}</div>
+                <div className="font-medium text-sm dark:text-secondary-honeydew">
+                  {comment.user?._ref === clerkId ? 
+                    (user?.fullName || user?.username || "You") : 
+                    `User ${comment.user?._ref?.substring(0, 4) || "Anonymous"}`}
+                </div>
                 <div className="text-sm">{comment.text}</div>
-                <div className="text-xs text-muted-foreground">{comment.createdAt && new Date(comment.createdAt).toLocaleString()}</div>
+                <div className="text-xs text-muted-foreground dark:text-secondary-honeydew/70">
+                  {comment.createdAt && new Date(comment.createdAt).toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                  })}
+                </div>
               </div>
             </div>
             {isEnrolled && comment.user?._ref === clerkId && (

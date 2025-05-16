@@ -14,7 +14,7 @@ interface CourseCompletionModalProps {
   onClose: () => void;
   course: Course;
   student: Student;
-  completionDate: Date;
+  completionDate?: Date; // Make optional for backward compatibility
 }
 
 export function CourseCompletionModal({
@@ -22,7 +22,7 @@ export function CourseCompletionModal({
   onClose,
   course,
   student,
-  completionDate,
+  // completionDate is no longer needed but kept in the interface for backward compatibility
 }: CourseCompletionModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -34,7 +34,6 @@ export function CourseCompletionModal({
           <CertificateTemplate
             course={course}
             student={student}
-            completionDate={completionDate}
           />
         </div>
       </DialogContent>

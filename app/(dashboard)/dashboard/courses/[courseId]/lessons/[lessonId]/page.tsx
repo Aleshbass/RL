@@ -5,6 +5,11 @@ import { PortableText } from "@portabletext/react";
 import { LoomEmbed } from "@/components/LoomEmbed";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { LessonCompleteButton } from "@/components/LessonCompleteButton";
+import LikeButton from "@/components/LikeButton";
+import CommentsSection from "@/components/CommentsSection";
+import RatingComponent from "@/components/RatingComponent";
+import { MessageCircle, ThumbsUp } from "lucide-react";
+import getCourseById from "@/sanity/lib/courses/getCourseById";
 
 interface LessonPageProps {
   params: Promise<{
@@ -18,9 +23,14 @@ export default async function LessonPage({ params }: LessonPageProps) {
   const { courseId, lessonId } = await params;
 
   const lesson = await getLessonById(lessonId);
-
   if (!lesson) {
     return redirect(`/dashboard/courses/${courseId}`);
+  }
+  
+  // Get the full course data for likes and comments
+  const course = await getCourseById(courseId);
+  if (!course) {
+    return redirect(`/dashboard/courses`);
   }
 
   return (
@@ -52,6 +62,40 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
             <div className="flex justify-end">
               <LessonCompleteButton lessonId={lesson._id} clerkId={user!.id} />
+            </div>
+
+            {/* Course Discussion Section */}
+            <div className="mt-12 border-t border-border pt-8">
+              <div className="flex items-center gap-2 mb-6">
+                <MessageCircle className="w-5 h-5 text-secondary-honeydew dark:text-secondary-honeydew" />
+                <h2 className="text-xl font-semibold dark:text-secondary-honeydew">Course Discussion</h2>
+              </div>
+              
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-muted-foreground dark:text-secondary-honeydew/80">
+                  Share your thoughts about this course
+                </p>
+                <div className="flex items-center gap-2">
+                  <ThumbsUp className="w-4 h-4 text-secondary-honeydew/80" />
+                  <LikeButton
+                    course={course}
+                    isEnrolled={true}
+                    clerkId={user!.id}
+                  />
+                </div>
+              </div>
+              
+              <RatingComponent 
+                course={course}
+                isEnrolled={true}
+                clerkId={user!.id}
+              />
+              
+              <CommentsSection
+                course={course}
+                isEnrolled={true}
+                clerkId={user!.id}
+              />
             </div>
           </div>
         </div>

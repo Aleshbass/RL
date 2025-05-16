@@ -63,7 +63,7 @@ export async function createPaystackCheckout(courseId: string, userId: string) {
     }
 
     // 3. Create and configure Paystack Transaction
-    const callback_url = `https://rehabifylearn.com/courses/${slug.current}`;
+    const callback_url = `https://rl-three.vercel.app/courses/${slug.current}`;
     const metadata = {
       courseId: course._id,
       userId: userId,
