@@ -1,9 +1,12 @@
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import EnrollButton from "@/components/EnrollButton";
 import getCourseBySlug from "@/sanity/lib/courses/getCourseBySlug";
+
+// Let's use a different approach without dynamic import
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { isEnrolledInCourse } from "@/sanity/lib/student/isEnrolledInCourse";
 import { auth } from "@clerk/nextjs/server";
 import { formatNaira } from "@/lib/utils";
@@ -46,6 +49,18 @@ export default async function CoursePage({ params }: CoursePageProps) {
       </div>
     );
   }
+  
+  // Create breadcrumb segments
+  const mobileBreadcrumbSegments = [
+    { title: "Home", href: "/" },
+    { title: "Courses", href: "/courses" },
+  ];
+  
+  const desktopBreadcrumbSegments = [
+    { title: "Home", href: "/" },
+    { title: "Courses", href: "/courses" },
+    { title: course.title || "Course Details", href: `/courses/${slug}` },
+  ];
 
   // Fetch related courses
   const relatedCourses = course.category?._id
@@ -54,8 +69,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <div className="relative h-[60vh] w-full">
+      {/* Hero Section with Breadcrumb on top - added margin-top to account for header height */}
+      <div className="relative h-[60vh] w-full mt-16">
         {course.image && (
           <Image
             src={urlFor(course.image).url() || ""}
@@ -66,16 +81,29 @@ export default async function CoursePage({ params }: CoursePageProps) {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black to-black/60" />
+        
+        {/* Breadcrumb on top of the image */}
+        <div className="absolute top-0 left-0 right-0 z-10 pt-20 pb-4">
+          <div className="container mx-auto px-4">
+            {/* Mobile breadcrumb (hidden on desktop) */}
+            <div className="md:hidden">
+              <Breadcrumb 
+                segments={mobileBreadcrumbSegments} 
+                className="text-sm backdrop-blur-sm bg-black/30 w-fit px-4 py-2 rounded-md [&_a]:!text-white [&_a:hover]:!text-white/80 [&_svg]:!text-white" 
+              />
+            </div>
+            
+            {/* Desktop breadcrumb (hidden on mobile) */}
+            <div className="hidden md:block">
+              <Breadcrumb 
+                segments={desktopBreadcrumbSegments} 
+                className="text-sm backdrop-blur-sm bg-black/30 w-fit px-4 py-2 rounded-md [&_a]:!text-white [&_a:hover]:!text-white/80 [&_svg]:!text-white" 
+              />
+            </div>
+          </div>
+        </div>
 
         <div className="absolute inset-0 container mx-auto px-4 flex flex-col justify-end pb-12">
-          <Link
-            href="/courses"
-            prefetch={false}
-            className="text-white mb-8 flex items-center hover:text-primary transition-colors w-fit"
-          >
-            <ArrowLeft className="mr-2 h-5 w-5" />
-            Back to Courses
-          </Link>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-4">

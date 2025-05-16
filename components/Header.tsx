@@ -8,8 +8,11 @@ import { SearchInput } from "./SearchInput";
 import { Button } from "./ui/button";
 import DarkModeToggle from "./DarkModeToggle";
 import BurgerMenu from "./BurgerMenu";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+  const showSearch = pathname === "/courses" || pathname === "/my-courses";
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-rehabify-core to-rehabify-alt border-b border-rehabify-core/20">
       <div className="container mx-auto px-4">
@@ -31,7 +34,7 @@ export default function Header() {
               />
             </Link>
 
-            <SearchInput />
+            {showSearch && <SearchInput />}
           </div>
 
           <div className="flex items-center space-x-2 md:space-x-4">

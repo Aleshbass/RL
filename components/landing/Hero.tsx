@@ -23,7 +23,7 @@ export default function Hero() {
       </div>
 
       {/* Desktop Background */}
-      <div className="absolute inset-0 hidden md:block bg-[#fdf9f1] dark:bg-gradient-to-br dark:from-primary/10 dark:via-background dark:to-background" />
+      <div className="absolute inset-0 hidden md:block bg-[#fdf9f1] dark:bg-black" />
       
       <div className="container mx-auto px-4 relative max-w-5xl md:max-w-6xl">
         <div className="grid md:grid-cols-2 gap-8 items-center">
