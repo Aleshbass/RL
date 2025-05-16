@@ -2,6 +2,16 @@
 
 import { urlFor } from "@/sanity/lib/image";
 
+// Define a type for Sanity image references
+interface SanityImageRef {
+  _type: string;
+  asset: {
+    _ref: string;
+    _type: string;
+  };
+  [key: string]: unknown;
+}
+
 interface CourseStructuredDataProps {
   course: {
     _id: string;
@@ -11,10 +21,10 @@ interface CourseStructuredDataProps {
     price?: number;
     instructor?: {
       name?: string;
-      photo?: any;
+      photo?: SanityImageRef;
       bio?: string;
     };
-    image?: any;
+    image?: SanityImageRef;
     category?: {
       name?: string;
     };

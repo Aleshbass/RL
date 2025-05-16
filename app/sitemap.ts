@@ -6,7 +6,8 @@ interface Course {
   slug: string;
   _id: string;
   title: string;
-  [key: string]: any; // For other properties that might be in the course object
+  // Use a more specific index signature for better type safety
+  [key: string]: string | number | boolean | object | undefined;
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

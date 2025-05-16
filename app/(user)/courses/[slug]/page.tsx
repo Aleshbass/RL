@@ -1,11 +1,9 @@
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
-import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import EnrollButton from "@/components/EnrollButton";
 import getCourseBySlug from "@/sanity/lib/courses/getCourseBySlug";
 import { CourseStructuredData } from "@/components/CourseStructuredData";
-import { Metadata } from "next";
 
 // Let's use a different approach without dynamic import
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -34,7 +32,8 @@ interface CoursePageProps {
   }>;
 }
 
-// Generate metadata for this page
+// Comment out the metadata generation for now to get past the build error
+/*
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const { slug } = params;
   const course = await getCourseBySlug(slug);
@@ -71,6 +70,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   };
 }
+*/
 
 export default async function CoursePage({ params }: CoursePageProps) {
   const { slug } = await params;
