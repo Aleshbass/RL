@@ -53,7 +53,7 @@ export default async function middleware(req: NextRequest) {
 }
  
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'nodejs',
   matcher: [
     // Skip static files, Next.js internals, and specific resources
     "/((?!_next/static|_next/image|favicon.ico|images/|assets/|fonts/|favicon/|\.(?:jpg|jpeg|gif|png|webp|svg|ico)).*)"
