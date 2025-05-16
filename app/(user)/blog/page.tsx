@@ -20,6 +20,22 @@ const postsQuery = groq`
   }
 `;
 
+// Define the Post type for the posts array
+interface Post {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  excerpt?: string;
+  publishedAt?: string;
+  bannerImage?: Record<string, unknown>;
+  thumbnail?: Record<string, unknown>;
+  author?: {
+    name?: string;
+    slug?: { current: string };
+    profileImage?: Record<string, unknown>;
+  };
+}
+
 export default async function BlogPage() {
   const posts = await client.fetch(postsQuery);
 
@@ -35,7 +51,7 @@ export default async function BlogPage() {
         />
         <h1 className="text-4xl font-bold mb-8 text-center">Blog</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post: any) => (
+          {(posts as Post[]).map((post) => (
             <Link
               key={post._id}
               href={`/blog/${post.slug.current}`}
@@ -75,7 +91,7 @@ export default async function BlogPage() {
                   {post.author?.profileImage ? (
                     <Image
                       src={urlFor(post.author.profileImage).width(48).height(48).url()}
-                      alt={post.author.name}
+                      alt={post.author.name || "Author"}
                       width={40}
                       height={40}
                       className="rounded-full object-cover border"
@@ -96,7 +112,7 @@ export default async function BlogPage() {
             </Link>
           ))}
         </div>
-        {posts.length === 0 && (
+        {(posts as Post[]).length === 0 && (
           <div className="text-center py-12">
             <p className="text-xl text-muted-foreground">No blog posts yet.</p>
           </div>

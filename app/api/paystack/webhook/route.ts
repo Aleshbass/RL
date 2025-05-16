@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { createEnrollment } from "@/sanity/lib/student/createEnrollment";
 import { getStudentByClerkId } from "@/sanity/lib/student/getStudentByClerkId";
 
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY ;
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();

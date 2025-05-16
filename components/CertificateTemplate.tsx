@@ -6,6 +6,7 @@ import { FileDown, Award, CheckCircle, ShieldCheck } from "lucide-react";
 import { Course, Student } from "@/sanity.types";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Image from "next/image";
 
 interface CertificateTemplateProps {
   course: Course;
@@ -82,10 +83,12 @@ export function CertificateTemplate({
         <div className="flex justify-between items-center mb-14 mt-4 relative z-10">
           {/* Organization Logo (Left) */}
           <div className="w-40 h-16 bg-gradient-to-r from-blue-50 to-white flex items-center justify-center rounded border border-gray-100">
-            <img 
+            <Image 
               src="https://res.cloudinary.com/dubeogufg/image/upload/v1747237202/Untitled_design_16_leqab3.png" 
               alt="Organization Logo" 
               className="max-h-full max-w-full object-contain" 
+              width={160}
+              height={64}
             />
           </div>
 

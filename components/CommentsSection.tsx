@@ -7,6 +7,7 @@ import { db } from "@/lib/firebase";
 import { ref as dbRef, onValue, push, set } from "firebase/database";
 import { sendCommentNotification } from "@/lib/resend";
 import { GetCourseBySlugQueryResult } from "@/sanity.types";
+import Image from "next/image";
 
 interface CommentsSectionProps {
   course: GetCourseBySlugQueryResult | null;
@@ -15,9 +16,8 @@ interface CommentsSectionProps {
 }
 
 export default function CommentsSection({ course, isEnrolled, clerkId }: CommentsSectionProps) {
-  if (!course) return null;
   const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState(course.comments || []);
+  const [comments, setComments] = useState(course?.comments || []);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const { client } = useClerk();
@@ -25,6 +25,7 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
 
   // Realtime comments from Firebase
   useEffect(() => {
+    if (!course?._id) return;
     const commentsRef = dbRef(db, `courses/${course._id}/comments`);
     const unsubscribe = onValue(commentsRef, (snapshot) => {
       const data = snapshot.val() || {};
@@ -32,7 +33,7 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
       setComments(commentList as typeof comments);
     });
     return () => unsubscribe();
-  }, [course._id]);
+  }, [course?._id]);
 
   // Fetch Clerk avatars for all unique user._ref in comments
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
   }, [comments, client]);
 
   const handleAddComment = async () => {
-    if (!commentText.trim() || !clerkId || !user?.id) return;
+    if (!commentText.trim() || !clerkId || !user?.id || !course) return;
     setLoading(true);
     try {
       // Add to Firebase for realtime
@@ -71,7 +72,7 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
       // Add to Sanity for persistence
       await addCourseComment({ courseId: course._id, clerkId, text: commentText });
       // Send notification (e.g., to instructor)
-      const instructorEmail = (course.instructor as any)?.email;
+      const instructorEmail = (course.instructor as { email?: string } | null | undefined)?.email;
       if (instructorEmail) {
         await sendCommentNotification({
           to: instructorEmail,
@@ -86,6 +87,7 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
   };
 
   const handleDeleteComment = async (commentKey: string) => {
+    if (!course) return;
     setLoading(true);
     try {
       await removeCourseComment({ courseId: course._id, commentKey });
@@ -94,6 +96,8 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
       setLoading(false);
     }
   };
+
+  if (!course) return null;
 
   return (
     <div className="mt-8">
@@ -124,7 +128,16 @@ export default function CommentsSection({ course, isEnrolled, clerkId }: Comment
           <div key={comment._key} className="bg-muted rounded p-3 flex justify-between items-center">
             <div className="flex items-center gap-3">
               {comment.user?._ref && avatars[comment.user._ref] ? (
-                <img src={avatars[comment.user._ref]} alt="avatar" className="w-8 h-8 rounded-full" />
+                <Image
+                  src={avatars[comment.user._ref]}
+                  alt="avatar"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full"
+                  onError={(e) => {
+                    e.currentTarget.src = "/fallback-avatar.png"; // Fallback image
+                  }}
+                />
               ) : (
                 <div className="w-8 h-8 rounded-full bg-gray-200" />
               )}

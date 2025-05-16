@@ -12,6 +12,17 @@ import LikeButton from "@/components/LikeButton";
 import { CourseCard } from "@/components/CourseCard";
 import { getRelatedCourses } from "@/sanity/lib/courses/getRelatedCourses";
 
+interface Module {
+  _id: string;
+  title: string;
+  lessons?: Lesson[];
+}
+
+interface Lesson {
+  _id: string;
+  title: string;
+}
+
 interface CoursePageProps {
   params: Promise<{
     slug: string;
@@ -99,7 +110,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
             <div className="bg-card rounded-lg p-6 mb-8 border border-border">
               <h2 className="text-2xl font-bold mb-4">Course Content</h2>
               <div className="space-y-4">
-                {course.modules?.map((module, index) => (
+                {course.modules?.map((module: Module, index: number) => (
                   <div
                     key={module._id}
                     className="border border-border rounded-lg"
@@ -110,7 +121,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                       </h3>
                     </div>
                     <div className="divide-y divide-border">
-                      {module.lessons?.map((lesson, lessonIndex) => (
+                      {module.lessons?.map((lesson: Lesson, lessonIndex: number) => (
                         <div
                           key={lesson._id}
                           className="p-4 hover:bg-muted/50 transition-colors"

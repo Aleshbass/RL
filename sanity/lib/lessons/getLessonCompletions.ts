@@ -1,5 +1,6 @@
 import { defineQuery } from "groq";
 import { sanityFetch } from "../live";
+import { Module, LessonCompletion } from "@/sanity.types";
 
 export async function getLessonCompletions(
   studentId: string,
@@ -28,10 +29,16 @@ export async function getLessonCompletions(
   const { course, completedLessons } = result.data;
 
   // Calculate module progress
-  const moduleProgress = course?.modules?.map((module) => {
+  const moduleProgress = course?.modules?.map((module: Module) => {
     const totalLessons = module.lessons?.length || 0;
     const completedInModule = completedLessons.filter(
-      (completion) => completion.module?._id === module._id
+      (completion: LessonCompletion) => {
+        // Handle both expanded module objects and module references
+        const moduleId = typeof completion.module === 'object' && '_id' in completion.module 
+          ? completion.module._id 
+          : completion.module?._ref;
+        return moduleId === module._id;
+      }
     ).length;
 
     return {
@@ -46,7 +53,7 @@ export async function getLessonCompletions(
   // Calculate overall course progress
   const totalLessons =
     course?.modules?.reduce(
-      (acc, module) => acc + (module?.lessons?.length || 0),
+      (acc: number, module: Module) => acc + (module?.lessons?.length || 0),
       0
     ) || 0;
 

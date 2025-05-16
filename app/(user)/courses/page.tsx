@@ -1,6 +1,7 @@
 import { getCourses } from "@/sanity/lib/courses/getCourses";
 import { CourseCard } from "@/components/CourseCard";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { GetCoursesQueryResult } from "@/sanity.types";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,7 @@ export default async function CoursesPage() {
         <h1 className="text-4xl font-bold mb-8">Available Courses</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course) => (
+          {courses.map((course: GetCoursesQueryResult[number]) => (
             <CourseCard
               key={course._id}
               course={course}

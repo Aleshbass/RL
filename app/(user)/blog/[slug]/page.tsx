@@ -21,8 +21,9 @@ const postQuery = groq`
   }
 `;
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await client.fetch(postQuery, { slug: params.slug });
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await client.fetch(postQuery, { slug });
   if (!post) return notFound();
 
   return (

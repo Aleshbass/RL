@@ -26,7 +26,7 @@ export async function getCertificateAction(clerkId: string, courseId: string) {
 
     // Get the latest completion date from the completed lessons
     const latestCompletion = progress.completedLessons.reduce(
-      (latest, current) => {
+      (latest: Date | null, current: { completedAt?: string }) => {
         const currentDate = new Date(current.completedAt || "");
         return !latest || currentDate > latest ? currentDate : latest;
       },

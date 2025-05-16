@@ -1,10 +1,11 @@
 import { PortableText, PortableTextComponents } from '@portabletext/react';
+import type { TypedObject } from '@portabletext/types';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 
 const components: PortableTextComponents = {
   types: {
-    image: ({ value }) =>
+    image: ({ value }: { value: { asset?: { _ref?: string }; alt?: string } }) =>
       value?.asset?._ref ? (
         <div className="my-6">
           <Image
@@ -44,6 +45,6 @@ const components: PortableTextComponents = {
   },
 };
 
-export default function PortableTextRenderer({ value }: { value: any }) {
+export default function PortableTextRenderer({ value }: { value: TypedObject | TypedObject[] }) {
   return <PortableText value={value} components={components} />;
 }

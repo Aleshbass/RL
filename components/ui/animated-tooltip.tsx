@@ -8,6 +8,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import Image from "next/image";
 
 export const AnimatedTooltip = ({
   items,
@@ -30,8 +31,8 @@ export const AnimatedTooltip = ({
     useTransform(x, [-100, 100], [-50, 50]),
     springConfig,
   );
-  const handleMouseMove = (event: any) => {
-    const halfWidth = event.target.offsetWidth / 2;
+  const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
+    const halfWidth = event.currentTarget.offsetWidth / 2;
     x.set(event.nativeEvent.offsetX - halfWidth);
   };
 
@@ -75,7 +76,7 @@ export const AnimatedTooltip = ({
               </motion.div>
             )}
           </AnimatePresence>
-          <img
+          <Image
             onMouseMove={handleMouseMove}
             height={100}
             width={100}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
 import { likeCourse, unlikeCourse } from "@/actions/courseLikes";
 import { GetCourseBySlugQueryResult } from "@/sanity.types";
 import { Heart } from "lucide-react";
@@ -15,15 +14,14 @@ interface LikeButtonProps {
 }
 
 export default function LikeButton({ course, isEnrolled, clerkId }: LikeButtonProps) {
-  if (!course) return null;
-  const [likes, setLikes] = useState(course.likes || []);
+  const [likes, setLikes] = useState(course?.likes || []);
   const [loading, setLoading] = useState(false);
-  const { user } = useUser();
   const userId = clerkId;
   const hasLiked = !!likes.find((like) => like.user?._ref === userId);
 
   // Realtime likes from Firebase
   useEffect(() => {
+    if (!course || !course._id) return;
     const likesRef = dbRef(db, `courses/${course._id}/likes`);
     const unsubscribe = onValue(likesRef, (snapshot) => {
       const data = snapshot.val() || {};
@@ -31,10 +29,10 @@ export default function LikeButton({ course, isEnrolled, clerkId }: LikeButtonPr
       setLikes(likeList as typeof likes);
     });
     return () => unsubscribe();
-  }, [course._id]);
+  }, [course]);
 
   const handleLike = async () => {
-    if (!userId || !isEnrolled) return;
+    if (!userId || !isEnrolled || !course) return;
     setLoading(true);
     try {
       // Add to Firebase for realtime
@@ -52,7 +50,7 @@ export default function LikeButton({ course, isEnrolled, clerkId }: LikeButtonPr
   };
 
   const handleUnlike = async () => {
-    if (!userId || !isEnrolled) return;
+    if (!userId || !isEnrolled || !course) return;
     setLoading(true);
     try {
       // Remove from Firebase for realtime
@@ -64,6 +62,8 @@ export default function LikeButton({ course, isEnrolled, clerkId }: LikeButtonPr
       setLoading(false);
     }
   };
+
+  if (!course) return null;
 
   return (
     <div className="flex items-center gap-2 mt-6">

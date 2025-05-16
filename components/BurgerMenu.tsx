@@ -14,11 +14,7 @@ import Link from "next/link";
 import DarkModeToggle from "./DarkModeToggle";
 import { useState } from "react";
 
-interface BurgerMenuProps {
-  className?: string;
-}
-
-export default function BurgerMenu({ className }: BurgerMenuProps) {
+export default function BurgerMenu() {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (

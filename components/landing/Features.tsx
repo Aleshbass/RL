@@ -1,7 +1,4 @@
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { AnimatedTooltip } from "../ui/animated-tooltip";
-import { motion } from "framer-motion";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 
 // Replace these image URLs with your actual Cloudinary or CDN URLs
