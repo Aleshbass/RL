@@ -27,7 +27,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) return notFound();
 
   return (
-    <div className="min-h-screen bg-[#FAF6E7] pt-24">
+    <div className="min-h-screen bg-[#FAF6E7] dark:bg-background pt-24">
       <div className="container mx-auto px-4 max-w-3xl">
         <Breadcrumb
           className="mb-6"
@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             />
           </div>
         )}
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground text-left">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground dark:text-secondary-honeydew text-left">
           {post.title}
         </h1>
         <div className="flex items-center gap-4 mb-8 justify-start">
@@ -63,14 +63,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             />
           )}
           <div className="text-left">
-            <div className="text-lg font-semibold text-foreground">
+            <div className="text-lg font-semibold text-foreground dark:text-secondary-honeydew">
               {post.author?.name}
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-muted-foreground dark:text-secondary-honeydew/70">
               {post.publishedAt && new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
             </div>
             {post.author?.bio && (
-              <div className="text-xs text-muted-foreground mt-1 line-clamp-2 max-w-xs">
+              <div className="text-xs text-muted-foreground dark:text-secondary-honeydew/70 mt-1 line-clamp-2 max-w-xs">
                 {post.author.bio}
               </div>
             )}

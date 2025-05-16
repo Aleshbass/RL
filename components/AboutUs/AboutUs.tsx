@@ -57,8 +57,8 @@ export default function AboutUs() {
             transition={{ duration: 0.5 }}
             className="p-8 rounded-xl border border-border bg-secondary-honeydew dark:bg-rehabify-alt/10"
           >
-            <h2 className="text-2xl font-bold mb-4 text-rehabify-core">Our Mission</h2>
-            <p className="text-rehabify-core/80">
+            <h2 className="text-2xl font-bold mb-4 text-rehabify-core dark:text-secondary-honeydew">Our Mission</h2>
+            <p className="text-rehabify-core/80 dark:text-secondary-honeydew/80">
               To provide accessible, high-quality continuing education for
               healthcare professionals, enabling them to stay current with the
               latest practices and deliver better patient care.
@@ -71,8 +71,8 @@ export default function AboutUs() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="p-8 rounded-xl border border-border bg-secondary-fairy dark:bg-rehabify-core/10"
           >
-            <h2 className="text-2xl font-bold mb-4 text-rehabify-core">Our Vision</h2>
-            <p className="text-rehabify-core/80">
+            <h2 className="text-2xl font-bold mb-4 text-rehabify-core dark:text-secondary-honeydew">Our Vision</h2>
+            <p className="text-rehabify-core/80 dark:text-secondary-honeydew/80">
               To become the leading online platform for healthcare professional
               education, fostering a community of lifelong learners dedicated to
               excellence in patient care.
@@ -90,11 +90,11 @@ export default function AboutUs() {
           >
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="relative z-10">
-                <h2 className="text-3xl font-bold mb-6 text-rehabify-core">Collaborative Learning Environment</h2>
-                <p className="text-lg text-rehabify-core/80 mb-6">
+                <h2 className="text-3xl font-bold mb-6 text-rehabify-core dark:text-secondary-honeydew">Collaborative Learning Environment</h2>
+                <p className="text-lg text-rehabify-core/80 dark:text-secondary-honeydew/80 mb-6">
                   At Rehabify Learn, we believe in the power of collaboration and shared knowledge. Our platform brings together healthcare professionals from diverse backgrounds to learn, grow, and excel together.
                 </p>
-                <p className="text-lg text-rehabify-core/80">
+                <p className="text-lg text-rehabify-core/80 dark:text-secondary-honeydew/80">
                   Join our community of passionate physiotherapists, occupational therapists, and other healthcare specialists who are committed to advancing their skills and improving patient outcomes.
                 </p>
               </div>
@@ -113,7 +113,7 @@ export default function AboutUs() {
 
         {/* Values Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Our Values</h2>
+          <h2 className="text-3xl font-bold text-center mb-8 dark:text-secondary-honeydew">Our Values</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
@@ -142,8 +142,8 @@ export default function AboutUs() {
                 className={`p-6 rounded-xl border border-border text-center ${index === 0 ? 'bg-secondary-fairy dark:bg-rehabify-core/10' : index === 1 ? 'bg-[#e6eafe] dark:bg-rehabify-highlight/10' : 'bg-[#fef3e6] dark:bg-rehabify-alt/20'}`}
               >
                 <div className="text-4xl mb-4">{value.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-rehabify-core">{value.title}</h3>
-                <p className="text-rehabify-core/80">{value.description}</p>
+                <h3 className="text-xl font-bold mb-2 text-rehabify-core dark:text-secondary-honeydew">{value.title}</h3>
+                <p className="text-rehabify-core/80 dark:text-secondary-honeydew/80">{value.description}</p>
               </motion.div>
             ))}
           </div>

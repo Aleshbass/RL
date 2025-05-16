@@ -58,10 +58,10 @@ export function CourseCard({ course, progress, href }: CourseCardProps) {
           </div>
         </div>
         <div className="p-6 flex flex-col flex-1">
-          <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+          <h3 className="text-xl font-bold mb-2 group-hover:text-primary dark:text-secondary-honeydew dark:group-hover:text-secondary-honeydew/80 transition-colors duration-300">
             {course.title}
           </h3>
-          <p className="text-muted-foreground mb-4 line-clamp-2 flex-1">
+          <p className="text-muted-foreground dark:text-secondary-honeydew/80 mb-4 line-clamp-2 flex-1">
             {course.description}
           </p>
           <div className="space-y-4 mt-auto">
@@ -82,11 +82,11 @@ export function CourseCard({ course, progress, href }: CourseCardProps) {
                       <Loader size="sm" />
                     </div>
                   )}
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-muted-foreground dark:text-secondary-honeydew/70">
                     by {course.instructor.name}
                   </span>
                 </div>
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
+                <BookOpen className="h-4 w-4 text-muted-foreground dark:text-secondary-honeydew/70" />
               </div>
             )}
             {typeof progress === "number" && (

@@ -35,10 +35,10 @@ export default function Features() {
 					{/* Hero Feature - Full Width */}
 					<div className="grid md:grid-cols-2 gap-8 min-h-[600px] rounded-3xl bg-secondary-honeydew dark:bg-rehabify-alt/10 p-8 md:p-12">
 						<div className="flex flex-col justify-center">
-							<h3 className="text-4xl md:text-6xl lg:text-7xl font-bold text-rehabify-core mb-6 leading-[1.1]">
+							<h3 className="text-4xl md:text-6xl lg:text-7xl font-bold text-rehabify-core dark:text-secondary-honeydew mb-6 leading-[1.1]">
 								Master New Skills, Anytime, Anywhere
 							</h3>
-							<p className="text-xl md:text-2xl text-rehabify-core/80 max-w-xl leading-relaxed">
+							<p className="text-xl md:text-2xl text-rehabify-core/80 dark:text-secondary-honeydew/80 max-w-xl leading-relaxed">
 								Access a world of expertly crafted courses and learn at your own
 								pace. Start your learning journey today.
 							</p>
@@ -59,10 +59,10 @@ export default function Features() {
 						<div className="relative rounded-3xl bg-secondary-fairy dark:bg-rehabify-core/10 p-8 md:p-12 overflow-hidden">
 							<div className="flex flex-col justify-between h-full min-h-[600px] relative z-10">
 								<div className="relative z-20">
-									<h3 className="text-3xl md:text-5xl font-bold text-rehabify-core mb-4 leading-tight max-w-sm">
+									<h3 className="text-3xl md:text-5xl font-bold text-rehabify-core dark:text-secondary-honeydew mb-4 leading-tight max-w-sm">
 										Interactive Learning
 									</h3>
-									<p className="text-lg md:text-xl text-rehabify-core/80 leading-relaxed max-w-sm">
+									<p className="text-lg md:text-xl text-rehabify-core/80 dark:text-secondary-honeydew/80 leading-relaxed max-w-sm">
 										Engage with immersive content through videos, quizzes, and hands-on
 										projects.
 									</p>
@@ -83,10 +83,10 @@ export default function Features() {
 						<div className="relative rounded-3xl bg-[#e6eafe] dark:bg-rehabify-highlight/10 p-8 md:p-12 overflow-hidden">
 							<div className="flex flex-col justify-between h-full min-h-[500px] relative z-10">
 								<div>
-									<h3 className="text-3xl md:text-5xl font-bold text-rehabify-core mb-4 leading-tight max-w-sm">
+									<h3 className="text-3xl md:text-5xl font-bold text-rehabify-core dark:text-secondary-honeydew mb-4 leading-tight max-w-sm">
 										Community Support
 									</h3>
-									<p className="text-lg md:text-xl text-rehabify-core/80 leading-relaxed max-w-sm">
+									<p className="text-lg md:text-xl text-rehabify-core/80 dark:text-secondary-honeydew/80 leading-relaxed max-w-sm">
 										Join a vibrant community of learners. Share progress, get help, and
 										grow together.
 									</p>
@@ -107,10 +107,10 @@ export default function Features() {
 					{/* Certificates - Full Width */}
 					<div className="grid md:grid-cols-2 gap-8 min-h-[500px] rounded-3xl bg-[#fef3e6] dark:bg-rehabify-alt/20 p-8 md:p-12">
 						<div className="flex flex-col justify-center">
-							<h3 className="text-3xl md:text-6xl font-bold text-rehabify-core mb-4 leading-tight">
+							<h3 className="text-3xl md:text-6xl font-bold text-rehabify-core dark:text-secondary-honeydew mb-4 leading-tight">
 								Earn Recognized Certificates
 							</h3>
-							<p className="text-lg md:text-2xl text-rehabify-core/80 leading-relaxed max-w-xl">
+							<p className="text-lg md:text-2xl text-rehabify-core/80 dark:text-secondary-honeydew/80 leading-relaxed max-w-xl">
 								Showcase your achievements with professional certificates. Build your
 								portfolio and advance your career.
 							</p>

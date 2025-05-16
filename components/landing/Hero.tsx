@@ -22,13 +22,13 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/60" />
       </div>
 
-      {/* Desktop Background gradient */}
-      <div className="absolute inset-0 hidden md:block bg-gradient-to-br from-primary/10 via-background to-background" />
+      {/* Desktop Background */}
+      <div className="absolute inset-0 hidden md:block bg-[#fdf9f1] dark:bg-gradient-to-br dark:from-primary/10 dark:via-background dark:to-background" />
       
       <div className="container mx-auto px-4 relative max-w-5xl md:max-w-6xl">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="relative z-10">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-white md:text-foreground">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-white md:text-foreground dark:text-secondary-honeydew">
               Transform Your Skills with{" "}
               <AnimatePresence mode="wait">
                 <motion.span 
@@ -47,7 +47,7 @@ export default function Hero() {
                 </motion.span>
               </AnimatePresence>
             </h1>
-            <p className="text-lg md:text-2xl text-white/90 md:text-muted-foreground mb-8">
+            <p className="text-lg md:text-2xl text-white/90 md:text-muted-foreground dark:text-secondary-honeydew/90 mb-8">
               Join thousands of students learning from industry experts. High-quality courses designed to help you excel in your career.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -62,7 +62,7 @@ export default function Hero() {
               <Link href="/my-courses">
                 <Button 
                   size="lg" 
-                  className="w-full sm:w-auto bg-primary text-primary-foreground border-none hover:bg-primary/90 md:bg-transparent md:text-rehabify-core md:border-rehabify-core md:hover:bg-rehabify-core/10 md:hover:text-rehabify-core"
+                  className="w-full sm:w-auto bg-primary text-primary-foreground border-none hover:bg-primary/90 md:bg-transparent md:text-rehabify-core md:dark:text-secondary-honeydew md:border-rehabify-core md:dark:border-secondary-honeydew md:hover:bg-rehabify-core/10 md:dark:hover:bg-secondary-honeydew/10 md:hover:text-rehabify-core md:dark:hover:text-secondary-honeydew"
                 >
                   My Learning Dashboard
                 </Button>
