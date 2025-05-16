@@ -4,7 +4,7 @@ import React from "react";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXTwitter, faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faXTwitter, faInstagram, faLinkedin, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 const team = [
   {
@@ -88,7 +88,7 @@ export default function Footer() {
               {/* Social Media Links */}
               <div className="flex justify-center gap-6 md:justify-start">
                 <motion.a
-                  href="https://www.instagram.com/rehabify.app/"
+                  href="https://www.instagram.com/rehabifylearn"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1 }}
@@ -98,7 +98,7 @@ export default function Footer() {
                   <FontAwesomeIcon icon={faInstagram} size="2x" />
                 </motion.a>
                 <motion.a
-                  href="https://www.linkedin.com/company/rehabify/posts/?feedView=all"
+                  href="https://www.linkedin.com/company/rehabifylearn"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1 }}
@@ -116,6 +116,17 @@ export default function Footer() {
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   <FontAwesomeIcon icon={faXTwitter} size="2x" />
+                </motion.a>
+                <motion.a
+                  href="https://wa.me/yournumberhere" /* Replace with your actual WhatsApp number */
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="text-secondary-honeydew hover:text-secondary-honeydew/90 transition-colors"
+                  aria-label="Contact us on WhatsApp"
+                >
+                  <FontAwesomeIcon icon={faWhatsapp} size="2x" />
                 </motion.a>
               </div>
 

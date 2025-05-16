@@ -20,14 +20,64 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RehabifyLearn",
-  description: "Expert-led rehabilitation courses and programs",
+  metadataBase: new URL('https://rehabifylearn.com'),
+  title: {
+    default: "RehabifyLearn - Expert Rehabilitation Courses & Certification",
+    template: "%s | RehabifyLearn"
+  },
+  description: "RehabifyLearn offers professional physiotherapy courses and certification for therapists and undergraduates. Enhance your rehabilitation skills with expert-led programs.",
+  keywords: [
+    "physiotherapy courses", 
+    "rehabilitation training", 
+    "physical therapy certification", 
+    "physiotherapy education", 
+    "online rehab courses", 
+    "professional development",
+    "physio certification",
+    "rehabilitation techniques"
+  ],
+  authors: [{ name: "RehabifyLearn Team" }],
+  creator: "RehabifyLearn",
+  publisher: "RehabifyLearn",
   icons: {
     icon: [
       { url: '/favicon/favicon.ico' },
       { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
     ]
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://rehabifylearn.com',
+    siteName: 'RehabifyLearn',
+    title: 'RehabifyLearn - Expert Rehabilitation Courses & Certification',
+    description: 'Professional physiotherapy courses and certification for therapists and students. Enhance your rehabilitation skills with expert-led programs.',
+    images: [
+      {
+        url: 'https://rehabifylearn.com/image/og-image.webp',
+        width: 1536,
+        height: 1024,
+        alt: 'RehabifyLearn - Expert Rehabilitation Courses'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RehabifyLearn - Expert Rehabilitation Courses & Certification',
+    description: 'Professional physiotherapy courses and certification for therapists and students. Enhance your rehabilitation skills with expert-led programs.',
+    images: ['https://rehabifylearn.com/image/og-image.webp'],
+    creator: '@rehabifylearn'
+  },
+  alternates: {
+    canonical: 'https://rehabifylearn.com',
+    languages: {
+      'en-US': 'https://rehabifylearn.com/en-US',
+    }
+  },
+  verification: {
+    // Add your Google Search Console verification code when available
+    google: 'google-site-verification-code',
   }
 };
 

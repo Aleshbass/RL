@@ -4,6 +4,8 @@ import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import EnrollButton from "@/components/EnrollButton";
 import getCourseBySlug from "@/sanity/lib/courses/getCourseBySlug";
+import { CourseStructuredData } from "@/components/CourseStructuredData";
+import { Metadata } from "next";
 
 // Let's use a different approach without dynamic import
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -30,6 +32,44 @@ interface CoursePageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+// Generate metadata for this page
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { slug } = params;
+  const course = await getCourseBySlug(slug);
+  
+  if (!course) {
+    return {};
+  }
+  
+  const title = course.title || "Course Details";
+  const description = course.description || "Expert-led rehabilitation course on RehabifyLearn";
+  
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: `https://rehabifylearn.com/courses/${slug}`,
+      ...(course.image && {
+        images: [{
+          url: urlFor(course.image).url() || '',
+          width: 1200,
+          height: 630,
+          alt: title
+        }]
+      })
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(course.image && { images: [urlFor(course.image).url() || ''] })
+    }
+  };
 }
 
 export default async function CoursePage({ params }: CoursePageProps) {
@@ -69,6 +109,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Add structured data for SEO */}
+      <CourseStructuredData course={course} />
       {/* Hero Section with Breadcrumb on top - added margin-top to account for header height */}
       <div className="relative h-[60vh] w-full mt-16">
         {course.image && (
