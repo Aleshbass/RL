@@ -116,6 +116,9 @@ importers:
       react:
         specifier: ^19.0.0
         version: 19.1.0
+      react-confetti:
+        specifier: ^6.4.0
+        version: 6.4.0(react@19.1.0)
       react-dom:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
@@ -6065,6 +6068,12 @@ packages:
     peerDependencies:
       react: ^17.0.0 || ^18.0.0 || ^19.0.0 || ^0.0.0-experimental
 
+  react-confetti@6.4.0:
+    resolution: {integrity: sha512-5MdGUcqxrTU26I2EU7ltkWPwxvucQTuqMm8dUz72z2YMqTD6s9vMcDUysk7n9jnC+lXuCPeJJ7Knf98VEYE9Rg==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.1 || ^18.0.0 || ^19.0.0
+
   react-dom@19.1.0:
     resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
     peerDependencies:
@@ -6852,6 +6861,9 @@ packages:
   tunnel@0.0.6:
     resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
     engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
+
+  tween-functions@1.2.0:
+    resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -10461,11 +10473,19 @@ snapshots:
     transitivePeerDependencies:
       - '@sanity/types'
 
+  '@sanity/presentation-comlink@1.0.19(@sanity/client@7.2.1(debug@4.4.1))(@sanity/types@3.88.3(@types/react@19.1.4)(debug@4.4.1))':
+    dependencies:
+      '@sanity/client': 7.2.1(debug@4.4.1)
+      '@sanity/comlink': 3.0.3
+      '@sanity/visual-editing-types': 1.0.18(@sanity/client@7.2.1(debug@4.4.1))(@sanity/types@3.88.3(@types/react@19.1.4)(debug@4.4.1))
+    transitivePeerDependencies:
+      - '@sanity/types'
+
   '@sanity/presentation-comlink@1.0.19(@sanity/client@7.2.1)(@sanity/types@3.88.3(@types/react@19.1.4))':
     dependencies:
       '@sanity/client': 7.2.1(debug@4.4.1)
       '@sanity/comlink': 3.0.3
-      '@sanity/visual-editing-types': 1.0.18(@sanity/client@7.2.1)(@sanity/types@3.88.3(@types/react@19.1.4))
+      '@sanity/visual-editing-types': 1.0.18(@sanity/client@7.2.1(debug@4.4.1))(@sanity/types@3.88.3(@types/react@19.1.4)(debug@4.4.1))
     transitivePeerDependencies:
       - '@sanity/types'
 
@@ -10679,7 +10699,7 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 3.88.3(@types/react@19.1.4)(debug@4.4.1)
 
-  '@sanity/visual-editing-types@1.0.18(@sanity/client@7.2.1)(@sanity/types@3.88.3(@types/react@19.1.4))':
+  '@sanity/visual-editing-types@1.0.18(@sanity/client@7.2.1(debug@4.4.1))(@sanity/types@3.88.3(@types/react@19.1.4)(debug@4.4.1))':
     dependencies:
       '@sanity/client': 7.2.1(debug@4.4.1)
     optionalDependencies:
@@ -14090,6 +14110,11 @@ snapshots:
     dependencies:
       react: 19.1.0
 
+  react-confetti@6.4.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      tween-functions: 1.2.0
+
   react-dom@19.1.0(react@19.1.0):
     dependencies:
       react: 19.1.0
@@ -14466,7 +14491,7 @@ snapshots:
       '@sanity/message-protocol': 0.13.2
       '@sanity/migrate': 3.88.3(@types/react@19.1.4)
       '@sanity/mutator': 3.88.3(@types/react@19.1.4)
-      '@sanity/presentation-comlink': 1.0.19(@sanity/client@7.2.1)(@sanity/types@3.88.3(@types/react@19.1.4))
+      '@sanity/presentation-comlink': 1.0.19(@sanity/client@7.2.1(debug@4.4.1))(@sanity/types@3.88.3(@types/react@19.1.4)(debug@4.4.1))
       '@sanity/preview-url-secret': 2.1.11(@sanity/client@7.2.1(debug@4.4.1))
       '@sanity/schema': 3.88.3(@types/react@19.1.4)(debug@4.4.1)
       '@sanity/sdk': 0.0.0-alpha.25(@types/react@19.1.4)(debug@4.4.1)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
@@ -15235,6 +15260,8 @@ snapshots:
       safe-buffer: 5.2.1
 
   tunnel@0.0.6: {}
+
+  tween-functions@1.2.0: {}
 
   type-check@0.4.0:
     dependencies:
